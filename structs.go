@@ -9,7 +9,7 @@ type baseRequest struct {
 	Longitude measurement
 }
 
-// ForecaseRequest contains all available options for requesting a forecast
+// ForecastRequest contains all available options for requesting a forecast
 type ForecastRequest struct {
 	baseRequest
 	Time    *timestamp

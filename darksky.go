@@ -9,14 +9,17 @@ const (
 	baseUrl = "https://api.darksky.net/forecast"
 )
 
+// DarkSky Api client
 type DarkSky struct {
 	BaseUrl string
 }
 
+// New creates a new DarkSky client
 func New() *DarkSky {
 	return &DarkSky{baseUrl}
 }
 
+// DarkSky.Forecast request a forecast
 func (d *DarkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
 	response := ForecastResponse{}
 
