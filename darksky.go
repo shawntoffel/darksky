@@ -5,32 +5,30 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
-var baseUrl = "https://api.darksky.net/forecast"
+const (
+	baseUrl = "https://api.darksky.net/forecast"
+)
 
-type DarkSky interface {
-	Forecast(request ForecastRequest) (ForecastResponse, error)
+type DarkSky struct {
+	BaseUrl string
 }
 
-type darkSky struct {
-	ApiKey string
+func New() *DarkSky {
+	return &DarkSky{baseUrl}
 }
 
-func New(apiKey string) DarkSky {
-	return &darkSky{apiKey}
-}
-
-func (d *darkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
+func (d *DarkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
 	response := ForecastResponse{}
 
-	url := buildRequestUrl(baseUrl, request)
+	url := d.buildRequestUrl(request)
 
 	err := get(url, nil, &response)
 
 	return response, err
 }
 
-func buildRequestUrl(baseUrl string, request ForecastRequest) string {
-	url := fmt.Sprintf("%s/%s/%f,%f", baseUrl, request.ApiKey, request.Latitude, request.Longitude)
+func (d *DarkSky) buildRequestUrl(request ForecastRequest) string {
+	url := fmt.Sprintf("%s/%s/%f,%f", d.BaseUrl, request.ApiKey, request.Latitude, request.Longitude)
 
 	if request.Time != nil {
 		url = url + fmt.Sprintf(",%d", request.Time)

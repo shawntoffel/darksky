@@ -24,6 +24,10 @@ func get(url string, headers map[string]string, output interface{}) error {
 	client := http.Client{}
 	response, err := client.Do(req)
 
+	if err != nil {
+		return err
+	}
+
 	defer response.Body.Close()
 
 	return decodeJson(response, &output)
