@@ -10,8 +10,7 @@ import (
 )
 
 func TestParseForecastResponse(t *testing.T) {
-	ds := New("api key")
-
+	ds := New()
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		bytes, _ := ioutil.ReadFile("testdata/newyork.json")
 		fmt.Fprintln(w, string(bytes))
@@ -19,7 +18,7 @@ func TestParseForecastResponse(t *testing.T) {
 
 	defer server.Close()
 
-	baseUrl = server.URL
+	ds.BaseUrl = server.URL
 	forecast, err := ds.Forecast(ForecastRequest{})
 
 	if err != nil {

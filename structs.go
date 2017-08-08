@@ -4,6 +4,7 @@ type Timestamp int64
 type Measurement float64
 
 type baseRequest struct {
+	ApiKey    string
 	Latitude  Measurement
 	Longitude Measurement
 }
