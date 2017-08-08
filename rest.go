@@ -7,7 +7,21 @@ import (
 	"net/http"
 )
 
-func Get(url string, headers map[string]string, output interface{}) error {
+type RestClient interface {
+	Get(url string, headers map[string]string, output interface{}) error
+}
+
+type restClient struct {
+	Client *http.Client
+}
+
+func NewRestClient() RestClient {
+	client := &http.Client{}
+
+	return &restClient{client}
+}
+
+func (r *restClient) Get(url string, headers map[string]string, output interface{}) error {
 
 	req, err := http.NewRequest("GET", url, nil)
 
@@ -26,10 +40,10 @@ func Get(url string, headers map[string]string, output interface{}) error {
 
 	defer response.Body.Close()
 
-	return DecodeJson(response, &output)
+	return decodeJson(response, &output)
 }
 
-func DecodeJson(r *http.Response, into interface{}) error {
+func decodeJson(r *http.Response, into interface{}) error {
 	var decoder = json.NewDecoder(r.Body)
 
 	if r.StatusCode != 200 {
