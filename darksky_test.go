@@ -2,23 +2,32 @@ package darksky
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
+	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 )
 
-func TestGetForecast(t *testing.T) {
-	request := ForecastRequest{}
-	request.Latitude = 0
-	request.Longitude = 0
-	request.Options = ForecastRequestOptions{}
-	request.Options.Exclude = "minutely,hourly,daily"
+func TestParseForecastResponse(t *testing.T) {
+	ds := New("token")
 
-	ds := New("invalid token")
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		bytes, _ := ioutil.ReadFile("testdata/newyork.json")
+		fmt.Fprintln(w, string(bytes))
+	}))
 
-	forecast, err := ds.Forecast(request)
+	defer server.Close()
+
+	ds.BaseUrl = server.URL
+	forecast, err := ds.Forecast(ForecastRequest{})
 
 	if err != nil {
-		fmt.Println(err.Error())
+		t.Error(err.Error())
 	}
 
-	fmt.Println(forecast.Currently.Icon)
+	actual := forecast.Timezone
+	expected := "America/New_York"
+
+	assert.Equal(t, actual, expected, "Timezone should match.")
 }

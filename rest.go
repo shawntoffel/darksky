@@ -21,6 +21,10 @@ func NewRestClient() RestClient {
 	return &restClient{client}
 }
 
+func NewRestClientWithClient(client *http.Client) RestClient {
+	return &restClient{client}
+}
+
 func (r *restClient) Get(url string, headers map[string]string, output interface{}) error {
 
 	req, err := http.NewRequest("GET", url, nil)
