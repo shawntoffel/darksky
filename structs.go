@@ -4,13 +4,13 @@ type Timestamp int64
 type Measurement float64
 
 type baseRequest struct {
-	ApiKey    string
 	Latitude  Measurement
 	Longitude Measurement
 }
 
 type ForecastRequest struct {
 	baseRequest
+	Time    *Timestamp
 	Options ForecastRequestOptions
 }
 

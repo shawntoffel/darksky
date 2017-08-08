@@ -7,17 +7,7 @@ import (
 	"net/http"
 )
 
-type RestClient struct {
-	Client *http.Client
-}
-
-func NewRestClient() *RestClient {
-	client := &http.Client{}
-
-	return &RestClient{client}
-}
-
-func (r *RestClient) Get(url string, headers map[string]string, output interface{}) error {
+func get(url string, headers map[string]string, output interface{}) error {
 
 	req, err := http.NewRequest("GET", url, nil)
 
@@ -31,7 +21,8 @@ func (r *RestClient) Get(url string, headers map[string]string, output interface
 
 	req.Header.Add("Content-Type", "application/json")
 
-	response, err := r.Client.Do(req)
+	client := http.Client{}
+	response, err := client.Do(req)
 
 	defer response.Body.Close()
 

@@ -5,35 +5,43 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
-const (
-	baseUrl = "https://api.darksky.net/forecast"
-)
+var baseUrl = "https://api.darksky.net/forecast"
 
-type DarkSky struct {
-	apiKey     string
-	BaseUrl    string
-	RestClient *RestClient
+type DarkSky interface {
+	Forecast(request ForecastRequest) (ForecastResponse, error)
 }
 
-func New(apiKey string) *DarkSky {
-	restClient := NewRestClient()
-	return &DarkSky{apiKey, baseUrl, restClient}
+type darkSky struct {
+	ApiKey string
 }
 
-func (d *DarkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
+func New(apiKey string) DarkSky {
+	return &darkSky{apiKey}
+}
+
+func (d *darkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
 	response := ForecastResponse{}
 
+	url := buildRequestUrl(baseUrl, request)
+
+	err := get(url, nil, &response)
+
+	return response, err
+}
+
+func buildRequestUrl(baseUrl string, request ForecastRequest) string {
+	url := fmt.Sprintf("%s/%s/%f,%f", baseUrl, request.ApiKey, request.Latitude, request.Longitude)
+
+	if request.Time != nil {
+		url = url + fmt.Sprintf(",%d", request.Time)
+	}
+
 	values, _ := query.Values(request.Options)
-
 	queryString := values.Encode()
-
-	url := fmt.Sprintf("%s/%s/%f,%f", d.BaseUrl, d.apiKey, request.Latitude, request.Longitude)
 
 	if len(queryString) > 0 {
 		url = url + "?" + queryString
 	}
 
-	err := d.RestClient.Get(url, nil, &response)
-
-	return response, err
+	return url
 }
