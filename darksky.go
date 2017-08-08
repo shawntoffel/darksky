@@ -19,7 +19,7 @@ func New() *DarkSky {
 	return &DarkSky{baseUrl}
 }
 
-// DarkSky.Forecast request a forecast
+// Forecast request a forecast
 func (d *DarkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
 	response := ForecastResponse{}
 
