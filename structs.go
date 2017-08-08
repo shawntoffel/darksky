@@ -43,7 +43,6 @@ type ForecastResponse struct {
 	Daily     DataBlock   `json:"daily,omitempty"`
 	Alerts    []Alert     `json:"alerts,omitempty"`
 	Flags     Flags       `json:"flags,omitempty"`
-	ApiCalls  int
 }
 
 type DataPoint struct {
