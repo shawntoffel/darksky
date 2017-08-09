@@ -18,7 +18,8 @@ func TestParseForecastResponse(t *testing.T) {
 
 	defer server.Close()
 
-	ds.SetBaseUrl(server.URL)
+	BaseUrl = server.URL
+
 	forecast, err := ds.Forecast(ForecastRequest{})
 
 	if err != nil {
