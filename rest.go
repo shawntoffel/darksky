@@ -16,7 +16,7 @@ func get(url string, output interface{}) error {
 		return err
 	}
 
-	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Content-Type", "application/json; charset=utf-8")
 	req.Header.Add("Accept-Encoding", "gzip")
 
 	client := http.Client{}
