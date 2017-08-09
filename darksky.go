@@ -10,17 +10,23 @@ const (
 )
 
 // DarkSky Api client
-type DarkSky struct {
+type DarkSky interface {
+	Forecast(request ForecastRequest) (ForecastResponse, error)
+	SetBaseUrl(baseUrl string)
+}
+
+type darkSky struct {
+	ApiKey  string
 	BaseUrl string
 }
 
 // New creates a new DarkSky client
-func New() *DarkSky {
-	return &DarkSky{baseUrl}
+func New(apiKey string) DarkSky {
+	return &darkSky{apiKey, baseUrl}
 }
 
 // Forecast request a forecast
-func (d *DarkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
+func (d *darkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
 	response := ForecastResponse{}
 
 	url := d.buildRequestUrl(request)
@@ -30,8 +36,12 @@ func (d *DarkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
 	return response, err
 }
 
-func (d *DarkSky) buildRequestUrl(request ForecastRequest) string {
-	url := fmt.Sprintf("%s/%s/%f,%f", d.BaseUrl, request.ApiKey, request.Latitude, request.Longitude)
+func (d *darkSky) SetBaseUrl(baseUrl string) {
+	d.BaseUrl = baseUrl
+}
+
+func (d *darkSky) buildRequestUrl(request ForecastRequest) string {
+	url := fmt.Sprintf("%s/%s/%f,%f", d.BaseUrl, d.ApiKey, request.Latitude, request.Longitude)
 
 	if request.Time != nil {
 		url = url + fmt.Sprintf(",%d", request.Time)

@@ -8,7 +8,6 @@ type Measurement float64
 
 // ForecastRequest contains all available options for requesting a forecast
 type ForecastRequest struct {
-	ApiKey    string
 	Latitude  Measurement
 	Longitude Measurement
 	Time      *Timestamp
