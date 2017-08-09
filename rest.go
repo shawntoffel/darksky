@@ -10,7 +10,6 @@ import (
 )
 
 func get(url string, output interface{}) error {
-
 	req, err := http.NewRequest("GET", url, nil)
 
 	if err != nil {
@@ -31,7 +30,13 @@ func get(url string, output interface{}) error {
 		return err
 	}
 
-	return decodeCompressedJson(response.Body, &output)
+	body, err := decompress(response)
+
+	if err != nil {
+		return err
+	}
+
+	return decodeJson(body, &output)
 }
 
 func checkErrors(response *http.Response) error {
@@ -43,14 +48,24 @@ func checkErrors(response *http.Response) error {
 	return nil
 }
 
-func decodeCompressedJson(body io.Reader, into interface{}) error {
-	reader, err := gzip.NewReader(body)
+func decompress(response *http.Response) (io.Reader, error) {
+	header := response.Header.Get("Content-Encoding")
 
-	if err != nil {
-		return err
+	if len(header) < 1 {
+		return response.Body, nil
 	}
 
-	jsonDecoder := json.NewDecoder(reader)
+	reader, err := gzip.NewReader(response.Body)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return reader, nil
+}
+
+func decodeJson(body io.Reader, into interface{}) error {
+	jsonDecoder := json.NewDecoder(body)
 
 	return jsonDecoder.Decode(&into)
 }
