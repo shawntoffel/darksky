@@ -6,17 +6,13 @@ type Timestamp int64
 // Measurement is a float64 measurement
 type Measurement float64
 
-type baseRequest struct {
+// ForecastRequest contains all available options for requesting a forecast
+type ForecastRequest struct {
 	ApiKey    string
 	Latitude  Measurement
 	Longitude Measurement
-}
-
-// ForecastRequest contains all available options for requesting a forecast
-type ForecastRequest struct {
-	baseRequest
-	Time    *Timestamp
-	Options ForecastRequestOptions
+	Time      *Timestamp
+	Options   ForecastRequestOptions
 }
 
 // ForecastRequestOptions are optional and passed as query parameters
