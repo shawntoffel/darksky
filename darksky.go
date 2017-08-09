@@ -30,7 +30,7 @@ func (d *darkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
 
 	url := d.buildRequestUrl(request)
 
-	err := get(url, nil, &response)
+	err := get(url, &response)
 
 	return response, err
 }
