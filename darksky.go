@@ -5,6 +5,7 @@ import (
 	"github.com/google/go-querystring/query"
 )
 
+// DarkSky API endpoint
 var (
 	BaseUrl = "https://api.darksky.net/forecast"
 )
