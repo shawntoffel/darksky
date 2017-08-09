@@ -22,6 +22,10 @@ func get(url string, output interface{}) error {
 	client := http.Client{}
 	response, err := client.Do(req)
 
+	if err != nil {
+		return err
+	}
+
 	defer response.Body.Close()
 
 	err = checkErrors(response)
