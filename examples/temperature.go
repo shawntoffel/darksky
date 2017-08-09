@@ -8,10 +8,9 @@ import (
 // print current temp in new york
 func main() {
 
-	client := darksky.New()
+	client := darksky.New("Api key")
 
 	request := darksky.ForecastRequest{}
-	request.ApiKey = "api key"
 	request.Latitude = 40.7128
 	request.Longitude = -74.0059
 
