@@ -1,19 +1,17 @@
 package darksky
 
-type timestamp int64
-type measurement float64
+// Timestamp is an int64 timestamp
+type Timestamp int64
 
-type baseRequest struct {
-	ApiKey    string
-	Latitude  measurement
-	Longitude measurement
-}
+// Measurement is a float64 measurement
+type Measurement float64
 
 // ForecastRequest contains all available options for requesting a forecast
 type ForecastRequest struct {
-	baseRequest
-	Time    *timestamp
-	Options ForecastRequestOptions
+	Latitude  Measurement
+	Longitude Measurement
+	Time      *Timestamp
+	Options   ForecastRequestOptions
 }
 
 // ForecastRequestOptions are optional and passed as query parameters
@@ -26,8 +24,8 @@ type ForecastRequestOptions struct {
 
 // ForecastResponse is the response containing all requested properties
 type ForecastResponse struct {
-	Latitude  measurement `json:"latitude,omitempty"`
-	Longitude measurement `json:"longitude,omitempty"`
+	Latitude  Measurement `json:"latitude,omitempty"`
+	Longitude Measurement `json:"longitude,omitempty"`
 	Timezone  string      `json:"timezone,omitempty"`
 	Currently DataPoint   `json:"currently,omitempty"`
 	Minutely  DataBlock   `json:"minutely,omitempty"`
@@ -39,42 +37,42 @@ type ForecastResponse struct {
 
 // DataPoint contains various properties, each representing the average (unless otherwise specified) of a particular weather phenomenon occurring during a period of time.
 type DataPoint struct {
-	ApparentTemperature        measurement `json:"apparentTemperature,omitempty"`
-	ApparentTemperatureMax     measurement `json:"apparentTemperatureMax,omitempty"`
-	ApparentTemperatureMaxTime timestamp   `json:"apparentTemperatureMaxTime,omitempty"`
-	ApparentTemperatureMin     measurement `json:"apparentTemperatureMin,omitempty"`
-	ApparentTemperatureMinTime timestamp   `json:"apparentTemperatureMinTime,omitempty"`
-	CloudCover                 measurement `json:"cloudCover,omitempty"`
-	DewPoint                   measurement `json:"dewPoint,omitempty"`
-	Humidity                   measurement `json:"humidity,omitempty"`
+	ApparentTemperature        Measurement `json:"apparentTemperature,omitempty"`
+	ApparentTemperatureMax     Measurement `json:"apparentTemperatureMax,omitempty"`
+	ApparentTemperatureMaxTime Timestamp   `json:"apparentTemperatureMaxTime,omitempty"`
+	ApparentTemperatureMin     Measurement `json:"apparentTemperatureMin,omitempty"`
+	ApparentTemperatureMinTime Timestamp   `json:"apparentTemperatureMinTime,omitempty"`
+	CloudCover                 Measurement `json:"cloudCover,omitempty"`
+	DewPoint                   Measurement `json:"dewPoint,omitempty"`
+	Humidity                   Measurement `json:"humidity,omitempty"`
 	Icon                       string      `json:"icon,omitempty"`
-	MoonPhase                  measurement `json:"moonPhase,omitempty"`
-	NearestStormBearing        measurement `json:"nearestStormBearing,omitempty"`
-	NearestStormDistance       measurement `json:"nearestStormDistance,omitempty"`
-	Ozone                      measurement `json:"ozone,omitempty"`
-	PrecipAccumulation         measurement `json:"precipAccumulation,omitempty"`
-	PrecipIntensity            measurement `json:"precipIntensity,omitempty"`
-	PrecipIntensityMax         measurement `json:"precipIntensityMax,omitempty"`
-	PrecipIntensityMaxTime     timestamp   `json:"precipIntensityMaxTime,omitempty"`
-	PrecipProbability          measurement `json:"precipProbability,omitempty"`
+	MoonPhase                  Measurement `json:"moonPhase,omitempty"`
+	NearestStormBearing        Measurement `json:"nearestStormBearing,omitempty"`
+	NearestStormDistance       Measurement `json:"nearestStormDistance,omitempty"`
+	Ozone                      Measurement `json:"ozone,omitempty"`
+	PrecipAccumulation         Measurement `json:"precipAccumulation,omitempty"`
+	PrecipIntensity            Measurement `json:"precipIntensity,omitempty"`
+	PrecipIntensityMax         Measurement `json:"precipIntensityMax,omitempty"`
+	PrecipIntensityMaxTime     Timestamp   `json:"precipIntensityMaxTime,omitempty"`
+	PrecipProbability          Measurement `json:"precipProbability,omitempty"`
 	PrecipType                 string      `json:"precipType,omitempty"`
-	Pressure                   measurement `json:"pressure,omitempty"`
+	Pressure                   Measurement `json:"pressure,omitempty"`
 	Summary                    string      `json:"summary,omitempty"`
-	SunriseTime                timestamp   `json:"sunriseTime,omitempty"`
-	SunsetTime                 timestamp   `json:"sunsetTime,omitempty"`
-	Temperature                measurement `json:"temperature,omitempty"`
-	TemperatureMax             measurement `json:"temperatureMax,omitempty"`
-	TemperatureMaxTime         timestamp   `json:"temperatureMaxTime,omitempty"`
-	TemperatureMin             measurement `json:"temperatureMin,omitempty"`
-	TemperatureMinTime         timestamp   `json:"temperatureMinTime,omitempty"`
-	Time                       timestamp   `json:"time,omitempty"`
+	SunriseTime                Timestamp   `json:"sunriseTime,omitempty"`
+	SunsetTime                 Timestamp   `json:"sunsetTime,omitempty"`
+	Temperature                Measurement `json:"temperature,omitempty"`
+	TemperatureMax             Measurement `json:"temperatureMax,omitempty"`
+	TemperatureMaxTime         Timestamp   `json:"temperatureMaxTime,omitempty"`
+	TemperatureMin             Measurement `json:"temperatureMin,omitempty"`
+	TemperatureMinTime         Timestamp   `json:"temperatureMinTime,omitempty"`
+	Time                       Timestamp   `json:"time,omitempty"`
 	UvIndex                    int64       `json:"uvIndex,omitempty"`
-	UvIndexTime                timestamp   `json:"uvIndexTime,omitempty"`
-	Visibility                 measurement `json:"visibility,omitempty"`
-	WindBearing                measurement `json:"windBearing,omitempty"`
-	WindGust                   measurement `json:"windGust,omitempty"`
-	WindGustTime               timestamp   `json:"windGustTime,omitempty"`
-	WindSpeed                  measurement `json:"windSpeed,omitempty"`
+	UvIndexTime                Timestamp   `json:"uvIndexTime,omitempty"`
+	Visibility                 Measurement `json:"visibility,omitempty"`
+	WindBearing                Measurement `json:"windBearing,omitempty"`
+	WindGust                   Measurement `json:"windGust,omitempty"`
+	WindGustTime               Timestamp   `json:"windGustTime,omitempty"`
+	WindSpeed                  Measurement `json:"windSpeed,omitempty"`
 }
 
 // DataBlock represents the various weather phenomena occurring over a period of time
@@ -87,10 +85,10 @@ type DataBlock struct {
 // Alert contains objects representing the severe weather warnings issued for the requested location by a governmental authority
 type Alert struct {
 	Description string    `json:"description,omitempty"`
-	Expires     timestamp `json:"expires,omitempty"`
+	Expires     Timestamp `json:"expires,omitempty"`
 	Regions     []string  `json:"regions,omitempty"`
 	Severity    string    `json:"severity,omitempty"`
-	Time        timestamp `json:"time,omitempty"`
+	Time        Timestamp `json:"time,omitempty"`
 	Title       string    `json:"title,omitempty"`
 	Uri         string    `json:"uri,omitempty"`
 }

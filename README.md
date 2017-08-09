@@ -34,14 +34,13 @@ import "github.com/shawntoffel/darksky"
 Construct a new DarkSky client
 
 ```go
-client := darksky.New()
+client := darksky.New("api key")
 ```
 
 Build a request
 
 ```go
 request := darksky.ForecastRequest{}
-request.ApiKey =  "api key"
 request.Latitude = 40.7128
 request.Longitude = -74.0059
 ```
