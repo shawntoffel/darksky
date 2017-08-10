@@ -13,6 +13,7 @@ func main() {
 	request := darksky.ForecastRequest{}
 	request.Latitude = 40.7128
 	request.Longitude = -74.0059
+	request.Options = darksky.ForecastRequestOptions{Exclude: "hourly,minutely"}
 
 	response, err := client.Forecast(request)
 
@@ -23,4 +24,5 @@ func main() {
 	}
 
 	fmt.Println(response.Currently.Temperature)
+	fmt.Println(response.Currently.Icon)
 }

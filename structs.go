@@ -10,7 +10,7 @@ type Measurement float64
 type ForecastRequest struct {
 	Latitude  Measurement
 	Longitude Measurement
-	Time      *Timestamp
+	Time      Timestamp
 	Options   ForecastRequestOptions
 }
 
