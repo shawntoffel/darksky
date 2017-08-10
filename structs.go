@@ -27,12 +27,12 @@ type ForecastResponse struct {
 	Latitude  Measurement `json:"latitude,omitempty"`
 	Longitude Measurement `json:"longitude,omitempty"`
 	Timezone  string      `json:"timezone,omitempty"`
-	Currently DataPoint   `json:"currently,omitempty"`
-	Minutely  DataBlock   `json:"minutely,omitempty"`
-	Hourly    DataBlock   `json:"hourly,omitempty"`
-	Daily     DataBlock   `json:"daily,omitempty"`
-	Alerts    []Alert     `json:"alerts,omitempty"`
-	Flags     Flags       `json:"flags,omitempty"`
+	Currently *DataPoint  `json:"currently,omitempty"`
+	Minutely  *DataBlock  `json:"minutely,omitempty"`
+	Hourly    *DataBlock  `json:"hourly,omitempty"`
+	Daily     *DataBlock  `json:"daily,omitempty"`
+	Alerts    *[]Alert    `json:"alerts,omitempty"`
+	Flags     *Flags      `json:"flags,omitempty"`
 }
 
 // DataPoint contains various properties, each representing the average (unless otherwise specified) of a particular weather phenomenon occurring during a period of time.
