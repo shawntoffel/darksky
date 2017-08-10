@@ -43,6 +43,7 @@ Build a request
 request := darksky.ForecastRequest{}
 request.Latitude = 40.7128
 request.Longitude = -74.0059
+request.Options = darksky.ForecastRequestOptions{Exclude: "hourly,minutely"}
 ```
 
 Get the forecast

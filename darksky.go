@@ -38,7 +38,7 @@ func (d *darkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
 func (d *darkSky) buildRequestUrl(request ForecastRequest) string {
 	url := fmt.Sprintf("%s/%s/%f,%f", BaseUrl, d.ApiKey, request.Latitude, request.Longitude)
 
-	if request.Time != nil {
+	if request.Time > 0 {
 		url = url + fmt.Sprintf(",%d", request.Time)
 	}
 
