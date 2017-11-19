@@ -2,6 +2,8 @@ package darksky
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/google/go-querystring/query"
 )
 
@@ -17,11 +19,16 @@ type DarkSky interface {
 
 type darkSky struct {
 	ApiKey string
+	Client *http.Client
 }
 
 // New creates a new DarkSky client
 func New(apiKey string) DarkSky {
-	return &darkSky{apiKey}
+	return &darkSky{apiKey, &http.Client{}}
+}
+
+func NewWithClient(apiKey string, client *http.Client) DarkSky {
+	return &darkSky{apiKey, client}
 }
 
 // Forecast request a forecast
@@ -30,7 +37,7 @@ func (d *darkSky) Forecast(request ForecastRequest) (ForecastResponse, error) {
 
 	url := d.buildRequestUrl(request)
 
-	err := get(url, &response)
+	err := get(d.Client, url, &response)
 
 	return response, err
 }
