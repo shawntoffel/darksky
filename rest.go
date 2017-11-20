@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func get(url string, output interface{}) error {
+func get(client *http.Client, url string, output interface{}) error {
 	req, err := http.NewRequest("GET", url, nil)
 
 	if err != nil {
@@ -19,7 +19,6 @@ func get(url string, output interface{}) error {
 	req.Header.Add("Content-Type", "application/json; charset=utf-8")
 	req.Header.Add("Accept-Encoding", "gzip")
 
-	client := http.Client{}
 	response, err := client.Do(req)
 
 	if err != nil {
