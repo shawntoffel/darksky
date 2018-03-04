@@ -27,6 +27,7 @@ func New(apiKey string) DarkSky {
 	return &darkSky{apiKey, &http.Client{}}
 }
 
+// NewWithClient creates a new DarkSky client with custom http.Client
 func NewWithClient(apiKey string, client *http.Client) DarkSky {
 	return &darkSky{apiKey, client}
 }
