@@ -5,3 +5,7 @@ go:
 env:
   global:
     - GO111MODULE=on
+
+script:
+  - go get -d -v ./...
+  - go test -v -race ./...
