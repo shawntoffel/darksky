@@ -54,6 +54,97 @@ func TestParseForecastExcludedResponse(t *testing.T) {
 	}
 }
 
+func TestUrlConstructionLatitudeLongitude(t *testing.T) {
+	ds := darkSky{
+		ApiKey: "apikey",
+	}
+
+	r := ForecastRequest{
+		Latitude:  40.712800,
+		Longitude: -74.005900,
+	}
+
+	BaseUrl = "http://localhost"
+
+	want := "http://localhost/apikey/40.712800,-74.005900"
+	have := ds.buildRequestUrl(r)
+
+	if want != have {
+		t.Errorf("want %s, have %s", want, have)
+	}
+}
+
+func TestUrlConstructionTimeMachine(t *testing.T) {
+	ds := darkSky{
+		ApiKey: "apikey",
+	}
+
+	r := ForecastRequest{
+		Latitude:  40.712800,
+		Longitude: -74.005900,
+		Time:      1547889618,
+	}
+
+	BaseUrl = "http://localhost"
+
+	want := "http://localhost/apikey/40.712800,-74.005900,1547889618"
+	have := ds.buildRequestUrl(r)
+
+	if want != have {
+		t.Errorf("want %s, have %s", want, have)
+	}
+}
+
+func TestUrlConstructionPartialForecastRequestOptions(t *testing.T) {
+	ds := darkSky{
+		ApiKey: "apikey",
+	}
+
+	r := ForecastRequest{
+		Latitude:  40.712800,
+		Longitude: -74.005900,
+		Options: ForecastRequestOptions{
+			Exclude: "hourly,minutely",
+		},
+	}
+
+	BaseUrl = "http://localhost"
+
+	want := "http://localhost/apikey/40.712800,-74.005900?exclude=hourly%2Cminutely"
+	have := ds.buildRequestUrl(r)
+
+	if want != have {
+		t.Errorf("want %s, have %s", want, have)
+	}
+}
+
+func TestUrlConstructionFull(t *testing.T) {
+	ds := darkSky{
+		ApiKey: "apikey",
+	}
+
+	r := ForecastRequest{
+		Latitude:  40.712800,
+		Longitude: -74.005900,
+		Time:      1547889618,
+		Options: ForecastRequestOptions{
+			Exclude: "minutely,daily",
+			Extend:  "hourly",
+			Lang:    "en",
+			Units:   "si",
+		},
+	}
+
+	BaseUrl = "http://localhost"
+
+	want := "http://localhost/apikey/40.712800,-74.005900,1547889618?exclude=minutely%2Cdaily&extend=hourly&lang=en&units=si"
+	have := ds.buildRequestUrl(r)
+
+	if want != have {
+		t.Errorf("want %s, have %s", want, have)
+	}
+}
+
 func getMockServerWithFileData(filename string) *httptest.Server {
 	bytes, _ := ioutil.ReadFile("testdata/" + filename)
 

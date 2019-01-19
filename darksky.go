@@ -49,7 +49,6 @@ func (d *darkSky) buildRequestUrl(request ForecastRequest) string {
 	}
 
 	queryString := request.Options.Encode()
-
 	if queryString != "" {
 		requestUrl = requestUrl + "?" + queryString
 	}
