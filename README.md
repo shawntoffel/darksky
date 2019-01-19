@@ -10,17 +10,8 @@ Dark Sky API client in Go https://darksky.net/dev/docs
 This assumes you already have a working Go environment, if not please see
 [this page](https://golang.org/doc/install) first.
 
-`go get` *will always pull the latest released version from the master branch.*
-
 ```sh
 go get github.com/shawntoffel/darksky
-```
-
-If you want to use the dev branch, follow these steps next.
-
-```sh
-cd $GOPATH/src/github.com/shawntoffel/darksky
-git checkout dev
 ```
 
 ### Usage
@@ -40,10 +31,13 @@ client := darksky.New("api key")
 Build a request
 
 ```go
-request := darksky.ForecastRequest{}
-request.Latitude = 40.7128
-request.Longitude = -74.0059
-request.Options = darksky.ForecastRequestOptions{Exclude: "hourly,minutely"}
+request := darksky.ForecastRequest{
+    Latitude:  40.7128,
+    Longitude: -74.0059,
+    Options: darksky.ForecastRequestOptions{
+        Exclude: "hourly,minutely",
+    },
+}
 ```
 
 Get the forecast
