@@ -1,5 +1,7 @@
 package darksky
 
+import "net/url"
+
 // Timestamp is an int64 timestamp
 type Timestamp int64
 
@@ -16,10 +18,30 @@ type ForecastRequest struct {
 
 // ForecastRequestOptions are optional and passed as query parameters
 type ForecastRequestOptions struct {
-	Exclude string `url:"exclude,omitempty"`
-	Extend  string `url:"extend,omitempty"`
-	Lang    string `url:"lang,omitempty"`
-	Units   string `url:"units,omitempty"`
+	Exclude string
+	Extend  string
+	Lang    string
+	Units   string
+}
+
+// Encode into URL encoded query string parameters (exclude=hourly&units=si)
+func (o ForecastRequestOptions) Encode() string {
+	q := url.Values{}
+
+	if o.Exclude != "" {
+		q.Add("exclude", o.Exclude)
+	}
+	if o.Extend != "" {
+		q.Add("extend", o.Extend)
+	}
+	if o.Lang != "" {
+		q.Add("lang", o.Lang)
+	}
+	if o.Units != "" {
+		q.Add("units", o.Units)
+	}
+
+	return q.Encode()
 }
 
 // ForecastResponse is the response containing all requested properties

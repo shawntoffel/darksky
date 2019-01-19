@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/shawntoffel/darksky"
 )
 
@@ -10,16 +11,17 @@ func main() {
 
 	client := darksky.New("api key")
 
-	request := darksky.ForecastRequest{}
-	request.Latitude = 40.7128
-	request.Longitude = -74.0059
-	request.Options = darksky.ForecastRequestOptions{Exclude: "hourly,minutely"}
+	request := darksky.ForecastRequest{
+		Latitude:  40.7128,
+		Longitude: -74.0059,
+		Options: darksky.ForecastRequestOptions{
+			Exclude: "hourly,minutely",
+		},
+	}
 
 	response, err := client.Forecast(request)
-
 	if err != nil {
 		fmt.Println(err.Error())
-
 		return
 	}
 
