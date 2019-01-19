@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestParseForecastFullResponse(t *testing.T) {
@@ -25,10 +23,12 @@ func TestParseForecastFullResponse(t *testing.T) {
 		t.Error(err.Error())
 	}
 
-	actual := forecast.Timezone
-	expected := "America/New_York"
+	want := "America/New_York"
+	have := forecast.Timezone
 
-	assert.Equal(t, actual, expected, "Timezone should match.")
+	if want != have {
+		t.Errorf("want %s, have %s", want, have)
+	}
 }
 
 func TestParseForecastExcludedResponse(t *testing.T) {
@@ -46,10 +46,12 @@ func TestParseForecastExcludedResponse(t *testing.T) {
 		t.Error(err.Error())
 	}
 
-	actual := forecast.Timezone
-	expected := "America/New_York"
+	want := "America/New_York"
+	have := forecast.Timezone
 
-	assert.Equal(t, actual, expected, "Timezone should match.")
+	if want != have {
+		t.Errorf("want %s, have %s", want, have)
+	}
 }
 
 func getMockServerWithFileData(filename string) *httptest.Server {
