@@ -6,9 +6,6 @@ env:
   global:
     - GO111MODULE=on
 
-install: 
-  - go get -d -v ./...
-
 script:
   - go vet ./...
   - go test -v -race ./...
