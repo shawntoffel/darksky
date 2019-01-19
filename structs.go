@@ -52,6 +52,7 @@ type DataPoint struct {
 	Ozone                       Measurement `json:"ozone,omitempty"`
 	PrecipAccumulation          Measurement `json:"precipAccumulation,omitempty"`
 	PrecipIntensity             Measurement `json:"precipIntensity,omitempty"`
+	PrecipIntensityError        Measurement `json:"precipIntensityError,omitempty"`
 	PrecipIntensityMax          Measurement `json:"precipIntensityMax,omitempty"`
 	PrecipIntensityMaxTime      Timestamp   `json:"precipIntensityMaxTime,omitempty"`
 	PrecipProbability           Measurement `json:"precipProbability,omitempty"`
@@ -95,7 +96,8 @@ type Alert struct {
 
 // Flags contains various metadata information related to the request
 type Flags struct {
-	DarkSkyUnavailable string   `json:"darksky-unavailable,omitempty"`
-	Sources            []string `json:"sources,omitempty"`
-	Units              string   `json:"units,omitempty"`
+	DarkSkyUnavailable string      `json:"darksky-unavailable,omitempty"`
+	NearestStation     Measurement `json:"nearest-station"`
+	Sources            []string    `json:"sources,omitempty"`
+	Units              string      `json:"units,omitempty"`
 }
