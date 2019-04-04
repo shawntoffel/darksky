@@ -64,6 +64,10 @@ type DataPoint struct {
 	ApparentTemperatureHighTime Timestamp   `json:"apparentTemperatureHighTime,omitempty"`
 	ApparentTemperatureLow      Measurement `json:"apparentTemperatureLow,omitempty"`
 	ApparentTemperatureLowTime  Timestamp   `json:"apparentTemperatureLowTime,omitempty"`
+	ApparentTemperatureMax      Measurement `json:"apparentTemperatureMax,omitempty"`
+	ApparentTemperatureMaxTime  Timestamp   `json:"apparentTemperatureMaxTime,omitempty"`
+	ApparentTemperatureMin      Measurement `json:"apparentTemperatureMin,omitempty"`
+	ApparentTemperatureMinTime  Timestamp   `json:"apparentTemperatureMinTime,omitempty"`
 	CloudCover                  Measurement `json:"cloudCover,omitempty"`
 	DewPoint                    Measurement `json:"dewPoint,omitempty"`
 	Humidity                    Measurement `json:"humidity,omitempty"`
@@ -88,6 +92,10 @@ type DataPoint struct {
 	TemperatureHighTime         Timestamp   `json:"temperatureHighTime,omitempty"`
 	TemperatureLow              Measurement `json:"temperatureLow,omitempty"`
 	TemperatureLowTime          Timestamp   `json:"temperatureLowTime,omitempty"`
+	TemperatureMax              Measurement `json:"temperatureMax,omitempty"`
+	TemperatureMaxTime          Timestamp   `json:"temperatureMaxTime,omitempty"`
+	TemperatureMin              Measurement `json:"temperatureMin,omitempty"`
+	TemperatureMinTime          Timestamp   `json:"temperatureMinTime,omitempty"`
 	Time                        Timestamp   `json:"time,omitempty"`
 	UvIndex                     int64       `json:"uvIndex,omitempty"`
 	UvIndexTime                 Timestamp   `json:"uvIndexTime,omitempty"`
