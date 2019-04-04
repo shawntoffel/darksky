@@ -1,7 +1,7 @@
 # DarkSky
 
 
-[![GoDoc](https://godoc.org/github.com/shawntoffel/darksky?status.svg)](https://godoc.org/github.com/shawntoffel/darksky) [![Go Report Card](https://goreportcard.com/badge/github.com/shawntoffel/darksky)](https://goreportcard.com/report/github.com/shawntoffel/darksky) [![Build Status](https://travis-ci.org/shawntoffel/darksky.svg?branch=master)](https://travis-ci.org/shawntoffel/darksky)
+[![GoDoc](https://godoc.org/github.com/shawntoffel/darksky?status.svg)](https://godoc.org/github.com/shawntoffel/darksky) [![Go Report Card](https://goreportcard.com/badge/github.com/shawntoffel/darksky)](https://goreportcard.com/report/github.com/shawntoffel/darksky) [![CircleCI](https://circleci.com/gh/shawntoffel/darksky.svg?style=svg)](https://circleci.com/gh/shawntoffel/darksky)
 
 Dark Sky API client in Go https://darksky.net/dev/docs
 
