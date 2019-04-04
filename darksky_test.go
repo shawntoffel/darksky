@@ -60,13 +60,13 @@ func TestUrlConstructionLatitudeLongitude(t *testing.T) {
 	}
 
 	r := ForecastRequest{
-		Latitude:  40.712800,
-		Longitude: -74.005900,
+		Latitude:  40.7128,
+		Longitude: -74.0059,
 	}
 
 	BaseUrl = "http://localhost"
 
-	want := "http://localhost/apikey/40.712800,-74.005900"
+	want := "http://localhost/apikey/40.7128,-74.0059"
 	have := ds.buildRequestUrl(r)
 
 	if want != have {
@@ -80,14 +80,14 @@ func TestUrlConstructionTimeMachine(t *testing.T) {
 	}
 
 	r := ForecastRequest{
-		Latitude:  40.712800,
-		Longitude: -74.005900,
+		Latitude:  40.7128,
+		Longitude: -74.0059,
 		Time:      1547889618,
 	}
 
 	BaseUrl = "http://localhost"
 
-	want := "http://localhost/apikey/40.712800,-74.005900,1547889618"
+	want := "http://localhost/apikey/40.7128,-74.0059,1547889618"
 	have := ds.buildRequestUrl(r)
 
 	if want != have {
@@ -101,8 +101,8 @@ func TestUrlConstructionPartialForecastRequestOptions(t *testing.T) {
 	}
 
 	r := ForecastRequest{
-		Latitude:  40.712800,
-		Longitude: -74.005900,
+		Latitude:  40.7128,
+		Longitude: -74.0059,
 		Options: ForecastRequestOptions{
 			Exclude: "hourly,minutely",
 		},
@@ -110,7 +110,7 @@ func TestUrlConstructionPartialForecastRequestOptions(t *testing.T) {
 
 	BaseUrl = "http://localhost"
 
-	want := "http://localhost/apikey/40.712800,-74.005900?exclude=hourly%2Cminutely"
+	want := "http://localhost/apikey/40.7128,-74.0059?exclude=hourly%2Cminutely"
 	have := ds.buildRequestUrl(r)
 
 	if want != have {
@@ -124,8 +124,8 @@ func TestUrlConstructionFull(t *testing.T) {
 	}
 
 	r := ForecastRequest{
-		Latitude:  40.712800,
-		Longitude: -74.005900,
+		Latitude:  40.7128,
+		Longitude: -74.0059,
 		Time:      1547889618,
 		Options: ForecastRequestOptions{
 			Exclude: "minutely,daily",
@@ -137,7 +137,34 @@ func TestUrlConstructionFull(t *testing.T) {
 
 	BaseUrl = "http://localhost"
 
-	want := "http://localhost/apikey/40.712800,-74.005900,1547889618?exclude=minutely%2Cdaily&extend=hourly&lang=en&units=si"
+	want := "http://localhost/apikey/40.7128,-74.0059,1547889618?exclude=minutely%2Cdaily&extend=hourly&lang=en&units=si"
+	have := ds.buildRequestUrl(r)
+
+	if want != have {
+		t.Errorf("want %s, have %s", want, have)
+	}
+}
+
+func TestUrlConstructionMaintainsFullFloat64LatLongPrecision(t *testing.T) {
+	ds := darkSky{
+		ApiKey: "apikey",
+	}
+
+	r := ForecastRequest{
+		Latitude:  40.71281234567891,
+		Longitude: -74.0059123456123,
+		Time:      1547889618,
+		Options: ForecastRequestOptions{
+			Exclude: "minutely,daily",
+			Extend:  "hourly",
+			Lang:    "en",
+			Units:   "si",
+		},
+	}
+
+	BaseUrl = "http://localhost"
+
+	want := "http://localhost/apikey/40.71281234567891,-74.0059123456123,1547889618?exclude=minutely%2Cdaily&extend=hourly&lang=en&units=si"
 	have := ds.buildRequestUrl(r)
 
 	if want != have {
