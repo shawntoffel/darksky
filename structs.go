@@ -49,6 +49,7 @@ type ForecastResponse struct {
 	Latitude  Measurement `json:"latitude,omitempty"`
 	Longitude Measurement `json:"longitude,omitempty"`
 	Timezone  string      `json:"timezone,omitempty"`
+	Offset    int         `json:"offset,omitempty"`
 	Currently *DataPoint  `json:"currently,omitempty"`
 	Minutely  *DataBlock  `json:"minutely,omitempty"`
 	Hourly    *DataBlock  `json:"hourly,omitempty"`
