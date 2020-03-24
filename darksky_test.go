@@ -31,6 +31,50 @@ func TestParseForecastFullResponse(t *testing.T) {
 	}
 }
 
+func TestParseForecastOffsetFloat(t *testing.T) {
+
+	ds := New("api key")
+	server := getMockServerWithFileData("forecast_mumbai.json")
+
+	defer server.Close()
+
+	BaseUrl = server.URL
+
+	forecast, err := ds.Forecast(ForecastRequest{})
+
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	want := float64(5.5)
+	have := float64(forecast.Offset)
+	if want != have {
+		t.Errorf("want %f, have %f", want, have)
+	}
+}
+
+func TestParseForecastOffsetInteger(t *testing.T) {
+
+	ds := New("api key")
+	server := getMockServerWithFileData("full.json")
+
+	defer server.Close()
+
+	BaseUrl = server.URL
+
+	forecast, err := ds.Forecast(ForecastRequest{})
+
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	want := float64(-5)
+	have := float64(forecast.Offset)
+	if want != have {
+		t.Errorf("want %f, have %f", want, have)
+	}
+}
+
 func TestParseForecastExcludedResponse(t *testing.T) {
 	ds := New("api key")
 
