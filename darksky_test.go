@@ -75,6 +75,28 @@ func TestParseForecastOffsetInteger(t *testing.T) {
 	}
 }
 
+func TestParseFloatUvIndex(t *testing.T) {
+
+	ds := New("api key")
+	server := getMockServerWithFileData("pirate_weather_full.json")
+
+	defer server.Close()
+
+	BaseUrl = server.URL
+
+	forecast, err := ds.Forecast(ForecastRequest{})
+
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	want := int64(1)
+	have := forecast.Currently.UvIndex
+	if want != have {
+		t.Errorf("want %d, have %d", want, have)
+	}
+}
+
 func TestParseForecastExcludedResponse(t *testing.T) {
 	ds := New("api key")
 
