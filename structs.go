@@ -1,6 +1,10 @@
 package darksky
 
-import "net/url"
+import (
+	"encoding/json"
+	"math"
+	"net/url"
+)
 
 // Timestamp is an int64 timestamp
 type Timestamp int64
@@ -105,6 +109,27 @@ type DataPoint struct {
 	WindGust                    Measurement `json:"windGust,omitempty"`
 	WindGustTime                Timestamp   `json:"windGustTime,omitempty"`
 	WindSpeed                   Measurement `json:"windSpeed,omitempty"`
+}
+
+// Custom Unmarshal to handle incoming float uvIndex from other APIs.
+func (d *DataPoint) UnmarshalJSON(data []byte) error {
+	type dataPointAlias DataPoint
+
+	alias := &struct {
+		UvIndex float64 `json:"uvIndex,omitempty"`
+		*dataPointAlias
+	}{
+		dataPointAlias: (*dataPointAlias)(d),
+	}
+
+	err := json.Unmarshal(data, &alias)
+	if err != nil {
+		return err
+	}
+
+	d.UvIndex = int64(math.Round(alias.UvIndex))
+
+	return nil
 }
 
 // DataBlock represents the various weather phenomena occurring over a period of time
