@@ -32,7 +32,6 @@ func TestParseForecastFullResponse(t *testing.T) {
 }
 
 func TestParseForecastOffsetFloat(t *testing.T) {
-
 	ds := New("api key")
 	server := getMockServerWithFileData("forecast_mumbai.json")
 
@@ -54,7 +53,6 @@ func TestParseForecastOffsetFloat(t *testing.T) {
 }
 
 func TestParseForecastOffsetInteger(t *testing.T) {
-
 	ds := New("api key")
 	server := getMockServerWithFileData("full.json")
 
@@ -76,7 +74,6 @@ func TestParseForecastOffsetInteger(t *testing.T) {
 }
 
 func TestParseFloatUvIndex(t *testing.T) {
-
 	ds := New("api key")
 	server := getMockServerWithFileData("pirate_weather_full.json")
 
